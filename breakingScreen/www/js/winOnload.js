@@ -1,59 +1,64 @@
 var bg;
 var cvs,ctx;
-var main,cmain; var w,h;
+var main; var w,h;
+var conx,cony;
+var bgw,bgh;
 window.onload=()=>{
+  start();
+};
+
+
+function start(){
 	main=document.getElementById('main');
-	cmain=main.cloneNode();
-	//main.style.backgroundImage = "url('../img/mainm.jpg')";
+	main.style.backgroundSize=100 + "% " + 100 + "%";
 	var sel=document.getElementById('select');
+	var btn=document.getElementById('btn');
 	var con=document.getElementById('control');
 	w=main.offsetWidth;
 	h=main.offsetHeight;
-	
-	
+	conx=w/2;
+	cony=h/2;
 	bg=new Image();
 	sel.addEventListener('change',(e)=>{
+		var lbf=document.getElementById('lbf');
+		lbf.style.backgroundSize=100 + "% " + 100 + "%";
+		let reader=new FileReader();
+		var lbimg=new Image();
+		reader.onload=function(){
+			lbimg.src=reader.result;
+		}
+		lbimg.onload=()=>{
+			lbf.style.backgroundImage=`url(${lbimg.src})`;
+		}
+		reader.readAsDataURL(sel.files[0]);
+	},false);
+	
+	con.addEventListener('click',(e)=>{
 		if(sel.files.length==0)return;
 		cvs=elt("canvas",{id:"canvas"});
 		ctx=cvs.getContext('2d');	
 		
-		var reader=new FileReader();
+		let reader=new FileReader();
 		reader.onload=function(){
 			bg.src=reader.result;
 		}
 		bg.onload=()=>{
-			bg.width=w;
-			bg.height=h;
 		}
 		reader.readAsDataURL(sel.files[0]);
-
-		console.log(main.offsetWidth+" "+main.offsetHeight);
-		console.log(cmain.offsetWidth+" "+cmain.offsetHeight);
-
-
 		document.body.removeChild(main);
 		document.body.appendChild(cvs);
-
-		console.log(main.offsetWidth+" "+main.offsetHeight);
-		console.log(cmain.offsetWidth+" "+cmain.offsetHeight);
-	
-	
 		draw();
 	},false);
-	
-};
-
-
-/*
-function play(){
-	다시할때 처음화면 돌아가기 
-	document.body.append(main);
-	document.body.removeChild(cvs);
 }
-*/
+function end(){
+	document.body.removeChild(cvs);
+	document.body.appendChild(main);
+	start();
+}
+
 
 function draw(){
-	ctx.drawImage(bg,0,0,w,h);
+	ctx.drawImage(bg,0,0,100,150);
 		
 	requestAnimationFrame(draw);
 };

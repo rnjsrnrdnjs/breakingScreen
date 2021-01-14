@@ -2,7 +2,7 @@ html,body{margin:0;padding:0;height:100%;}
 #main{
 	width:100%;
 	height:100%;
-	background-image:url(../img/main.jpg);
+	background-image:url(../img/main.png);
 	background-repeat:no-repeat;
 	background-size:100% 100%;
 	text-align:center;
@@ -22,29 +22,28 @@ html,body{margin:0;padding:0;height:100%;}
 	display: inline-block; 
 	padding: .5em .75em; 
 	color: #999; 
-	font-size: inherit; 
 	line-height: normal; 
 	vertical-align: middle; 
 	background-color: #fdfdfd; 
 	cursor: pointer; 
-	border: 1px solid #ebebeb; 
-	border-bottom-color: #e2e2e2; 
+	border: 2px solid black; 
 	border-radius: .25em; 
+	font-size: 2em; 
+	overflow:hidden;
 	
-	width:60%;
+	width:55%;
 	height:40%;
 } 
 #main #btn{
 	display: inline-block; 
 	padding: .5em .75em; 
 	color: #999; 
-	font-size: inherit; 
+	font-size: 1em; 
 	line-height: normal; 
 	vertical-align: middle; 
 	background-color: #fdfdfd; 
 	cursor: pointer; 
-	border: 1px solid #ebebeb; 
-	border-bottom-color: #e2e2e2; 
+	border: 2px solid black; 
 	border-radius: .25em; 
 	
 	width:20%;
@@ -52,5 +51,13 @@ html,body{margin:0;padding:0;height:100%;}
 }
 #main input[type="file"] { /* 파일 필드 숨기기 */ 
 	position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; 
+}
+#a,#b,#c,#d,#e,#f,#g{
+	width:15%;
+	height:15%;
+}
+#control {
+	width:100%;
+	height:40%;
 }
 
