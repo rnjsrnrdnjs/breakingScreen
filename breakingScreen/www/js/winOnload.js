@@ -16,7 +16,7 @@ var bgw,bgh;
 	8-wpon1=언월도
 	9-wpon2=칼
 */
-var con,ar1,gun1,house1,nature1,spc1,spc2,sum1,sum2,wpon1,wpon2,play,home,s2b,death,bgl,exp,bomb,blt;
+var con,ar1,gun1,house1,nature1,spc1,spc2,sum1,sum2,wpon1,wpon2,play,home,s2b,death,bgl,exp,bomb,blt,ham,crk,lb,castle,egg,cannon,uni;
 var state=1;
 var isPaused = false;
 var raf=null;
@@ -71,6 +71,20 @@ function imginit(){
 	bomb.src="../img/summons/bomb.svg";
 	blt=new Image();
 	blt.src="../img/wpon/blt.svg";
+	ham=new Image();
+	ham.src="../img/wpon/hammer.svg";
+	crk=new Image();
+	crk.src="../img/wpon/crack.svg";
+	lb=new Image();
+	lb.src="../img/wpon/lb.svg";
+	castle=new Image();
+	castle.src="../img/fairytale/castle.svg";
+	egg=new Image();
+	egg.src="../img/egg/egg.svg";
+	cannon=new Image();
+	cannon.src="../img/cannon/cannon.svg";
+	uni=new Image();
+	uni.src="../img/art/unicon.svg";
 }
 
 function start(){
@@ -111,6 +125,8 @@ function start(){
 		reader.readAsDataURL(sel.files[0]);
 		document.body.removeChild(main);
 		document.body.appendChild(cvs);
+		ctx.beginPath();
+		ctx.lineWidth=3;
 		cvsClick();
 		raf=requestAnimationFrame(draw);
 	},false);
@@ -122,10 +138,9 @@ function end(){
 }
 function cvsClick(){
 	cvs.addEventListener("click",(e)=>{
-		console.log(1);
 		var p=relativePosition(e,ctx.canvas);
 		// 버튼 바 클릭시 
-		if(p.x>=cvs.width-49 && p.x <=cvs.width && p.y>=cvs.height-49 && p.y <=cvs.height){
+		if(p.x>=cvs.width-50 && p.x <=cvs.width && p.y>=cvs.height-50 && p.y <=cvs.height){
 			if(!isPaused){
 				isPaused=true;
 				cancelAnimationFrame(raf);
@@ -137,19 +152,22 @@ function cvsClick(){
 			if(isPaused){
 				//처음껀 홈화면
 				isPaused=false;
-				if(p.x>=cvs.width/7*3 && p.x <=cvs.width/7*3+100 && p.y>=0 && p.y <=100){
+				if(p.x>=cvs.width/7*3 && p.x <=cvs.width/7*3+cvs.width/9 && p.y>=0 && p.y <=cvs.height/10){
 					end();
 					return;
 				}
-				if(p.x>=cvs.width/7*1 && p.x <=cvs.width/7*1+cvs.width/10 && p.y>=cvs.height/7*1 && p.y <=cvs.height/7*1+cvs.width/10)state=1;
-				if(p.x>=cvs.width/7*1 && p.x <=cvs.width/7*1+cvs.width/10 && p.y>=cvs.height/7*3 && p.y <=cvs.height/7*3+cvs.width/10)state=2;
-				if(p.x>=cvs.width/7*1 && p.x <=cvs.width/7*1+cvs.width/10 && p.y>=cvs.height/7*5 && p.y <=cvs.height/7*5+cvs.width/10)state=3;
-				if(p.x>=cvs.width/7*3 && p.x <=cvs.width/7*3+cvs.width/10 && p.y>=cvs.height/7*1 && p.y <=cvs.height/7*1+cvs.width/10)state=4;
-				if(p.x>=cvs.width/7*3 && p.x <=cvs.width/7*3+cvs.width/10 && p.y>=cvs.height/7*3 && p.y <=cvs.height/7*3+cvs.width/10)state=5;
-				if(p.x>=cvs.width/7*3 && p.x <=cvs.width/7*3+cvs.width/10 && p.y>=cvs.height/7*5 && p.y <=cvs.height/7*5+cvs.width/10)state=6;
-				if(p.x>=cvs.width/7*5 && p.x <=cvs.width/7*5+cvs.width/10 && p.y>=cvs.height/7*1 && p.y <=cvs.height/7*1+cvs.width/10)state=7;
-				if(p.x>=cvs.width/7*5 && p.x <=cvs.width/7*5+cvs.width/10 && p.y>=cvs.height/7*3 && p.y <=cvs.height/7*3+cvs.width/10)state=8;
-				if(p.x>=cvs.width/7*5 && p.x <=cvs.width/7*5+cvs.width/10 && p.y>=cvs.height/7*5 && p.y <=cvs.height/7*5+cvs.width/10)state=9;
+				if(p.x>=cvs.width/9*1 && p.x <=cvs.width/9*1+cvs.width/10 && p.y>=cvs.height/9*1 && p.y <=cvs.height/9*1+cvs.height/10)state=1;
+				if(p.x>=cvs.width/9*1 && p.x <=cvs.width/9*1+cvs.width/10 && p.y>=cvs.height/9*3 && p.y <=cvs.height/9*3+cvs.height/10)state=2;
+				if(p.x>=cvs.width/9*1 && p.x <=cvs.width/9*1+cvs.width/10 && p.y>=cvs.height/9*5 && p.y <=cvs.height/9*5+cvs.height/10)state=3;
+				if(p.x>=cvs.width/9*3 && p.x <=cvs.width/9*3+cvs.width/10 && p.y>=cvs.height/9*1 && p.y <=cvs.height/9*1+cvs.height/10)state=4;
+				if(p.x>=cvs.width/9*3 && p.x <=cvs.width/9*3+cvs.width/10 && p.y>=cvs.height/9*3 && p.y <=cvs.height/9*3+cvs.height/10)state=5;
+				if(p.x>=cvs.width/9*3 && p.x <=cvs.width/9*3+cvs.width/10 && p.y>=cvs.height/9*5 && p.y <=cvs.height/9*5+cvs.height/10)state=6;
+				if(p.x>=cvs.width/9*5 && p.x <=cvs.width/9*5+cvs.width/10 && p.y>=cvs.height/9*1 && p.y <=cvs.height/9*1+cvs.height/10)state=7;
+				if(p.x>=cvs.width/9*5 && p.x <=cvs.width/9*5+cvs.width/10 && p.y>=cvs.height/9*3 && p.y <=cvs.height/9*3+cvs.height/10)state=8;
+				if(p.x>=cvs.width/9*5 && p.x <=cvs.width/9*5+cvs.width/10 && p.y>=cvs.height/9*5 && p.y <=cvs.height/9*5+cvs.height/10)state=9;
+				if(p.x>=cvs.width/9*7 && p.x <=cvs.width/9*7+cvs.width/10 && p.y>=cvs.height/9*1 && p.y <=cvs.height/9*1+cvs.height/10)state=16;
+				if(p.x>=cvs.width/9*7 && p.x <=cvs.width/9*7+cvs.width/10 && p.y>=cvs.height/9*3 && p.y <=cvs.height/9*3+cvs.height/10)state=17;
+				if(p.x>=cvs.width/9*7 && p.x <=cvs.width/9*7+cvs.width/10 && p.y>=cvs.height/9*5 && p.y <=cvs.height/9*5+cvs.height/10)state=18;
 				raf=requestAnimationFrame(draw);
 			}
 			else{
@@ -162,7 +180,7 @@ function cvsClick(){
 }
 function draw(){
 	ctx.drawImage(bg,0,0,cvs.width,cvs.height);
-	ctx.drawImage(con,cvs.width-49,cvs.height-49,50,50);
+	ctx.drawImage(con,cvs.width-50,cvs.height-50,50,50);
 	eleAction();
 	
 	raf=requestAnimationFrame(draw);
@@ -171,11 +189,21 @@ function draw(){
 function eleAction(){
 	for(let i=0;i<ele.length;i++){
 		if(ele[i].state==1){
-			
+			if(!ele[i].live || ele[i].cnt<0){
+				ele.push({state:19,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:40,height:40});
+				ele.splice(i,1);
+				continue;
+			}
+			ele[i].cnt--;
+			if(ele[i].cnt>=0){
+				ctx.drawImage(ar1,ele[i].x,ele[i].y,ele[i].width,ele[i].height);
+			}
 		}
 		else if(ele[i].state==2){
-			if(!ele[i].live)
+			if(!ele[i].live){
 				ele.splice(i,1);
+				continue;
+			}
 			ele[i].cnt--;
 			if(ele[i].cnt>=0){
 				ctx.drawImage(gun1,cvs.width-301,cvs.height-201,300,200);
@@ -185,12 +213,13 @@ function eleAction(){
 				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
 				}
 			}
-			ctx.drawImage(blt,ele[i].x,ele[i].y,ele[i].width,ele[i].height);
+			ctx.drawImage(blt,ele[i].x-30,ele[i].y-30,ele[i].width,ele[i].height);
 			
 		}
 		else if(ele[i].state==3){
 			if(!ele[i].live || ele[i].cnt<=0){
 				ele.splice(i,1);
+				continue;
 			}
 			ctx.drawImage(house1,ele[i].x,ele[i].y,80,80);
 			ele[i].cnt--;
@@ -207,13 +236,21 @@ function eleAction(){
 				ele[j].live=false;
 				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
 			}
-			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0)
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
 				ele.splice(i, 1);
+				continue;
+			}
 			ctx.drawImage(nature1,ele[i].x,ele[i].y,150,150);
 		}
 		else if(ele[i].state==5){
 			if(!ele[i].live || ele[i].cnt<=0){
 				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+				if(ele[j].live &&  ele[j].x < ele[i].x+100 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+100)
+				ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
 			}
 			ctx.drawImage(spc2,ele[i].x,ele[i].y,100,100);
 			ele[i].cnt--;
@@ -225,7 +262,10 @@ function eleAction(){
 			if(!ele[i].live){
 				ele[i].cnt--;
 				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
-				if(ele[i].cnt<=0)ele.splice(i,1);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
 			}
 			else{
 				var r=Math.floor(Math.random()*8);
@@ -238,37 +278,65 @@ function eleAction(){
 				ctx.drawImage(sum1,ele[i].x,ele[i].y,30,30);
 			}
 		}
-		else if(ele[i].state==7){
+		else if(ele[i].state==7){ //공룡
 			if(!ele[i].live){
 				ele[i].cnt--;
 				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
-				if(ele[i].cnt<=0)ele.splice(i,1);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);continue;
+				}
 			}
 			else{
 				var r=Math.floor(Math.random()*8);
-				ele[i].x+=d[r][0]*0.4;
-				ele[i].y+=d[r][1]*0.4;
+				ele[i].x+=d[r][0]*1;
+				ele[i].y+=d[r][1]*1;
 				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
-					ele[i].x-=d[r][0]*0.4;
-					ele[i].y-=d[r][1]*0.4;
+					ele[i].x-=d[r][0]*1;
+					ele[i].y-=d[r][1]*1;
 				}
-				ctx.drawImage(sum2,ele[i].x,ele[i].y,100,100);
+				ctx.drawImage(sum2,ele[i].x,ele[i].y,65,65);
 				let rr=Math.floor(Math.random()*100);
 				if(rr%15==0)
-				ctx.drawImage(s2b,ele[i].x+100,ele[i].y,100,100);
+				ctx.drawImage(s2b,ele[i].x+100,ele[i].y,65,65);
 			}
 		}
-		else if(ele[i].state==8){
-			
+		else if(ele[i].state==8){   //언월도
+			ele[i].cnt--;
+			if(ele[i].cnt>=0){
+				ctx.drawImage(wpon1,ele[i].x,ele[i].y,100,100);
+			}/* 스태이트 12~15 번개 */
+			else{
+				ele.push({state:12,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:13,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:14,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:15,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.splice(i,1);
+				continue;
+			}
 		}
-		else if(ele[i].state==9){
-			
+		else if(ele[i].state==9){   //망치
+			if(!ele[i].live){
+				ele.splice(i,1);
+				continue;
+			}
+			ele[i].cnt--;
+			if(ele[i].cnt>=0){
+				ctx.drawImage(ham,ele[i].x,ele[i].y,60,60);
+				for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+70 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+70)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			}
+			ctx.drawImage(crk,ele[i].x-30,ele[i].y-30,ele[i].width,ele[i].height);
 		}
 		else if(ele[i].state==10){//도둑
 			if(!ele[i].live){
 				ele[i].cnt--;
 				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
-				if(ele[i].cnt<=0)ele.splice(i,1);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);continue;
+				}
 			}
 			else{
 				var r=Math.floor(Math.random()*8);
@@ -296,17 +364,106 @@ function eleAction(){
 			}
 			else {
 				ele.splice(i,1);
+				continue;
 			}
 		}
-
+		else if(ele[i].state==12){ //번개
+			ele[i].x+=d[0][0]*2.5;
+			ele[i].y+=d[0][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(lb,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==13){
+			ele[i].x+=d[1][0]*2.5;
+			ele[i].y+=d[1][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(lb,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==14){
+			ele[i].x+=d[2][0]*2.5;
+			ele[i].y+=d[2][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(lb,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==15){
+			ele[i].x+=d[5][0]*2.5;
+			ele[i].y+=d[5][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(lb,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==16){
+			
+		}
+		else if(ele[i].state==17){
+			
+		}
+		else if(ele[i].state==18){
+			
+		}
+		else if(ele[i].state==19){
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				ctx.strokeStyle ="#" + Math.round(Math.random() * 0xffffff).toString(16);
+				var r=Math.floor(Math.random()*8);
+				ctx.moveTo(ele[i].x,ele[i].y);
+				ele[i].x+=d[r][0]*4;
+				ele[i].y+=d[r][1]*4;
+				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+					ele[i].x-=d[r][0]*4;
+					ele[i].y-=d[r][1]*4;
+				}
+				ctx.lineTo(ele[i].x, ele[i].y);
+				ctx.stroke();
+				ctx.drawImage(uni,ele[i].x-30,ele[i].y-30,60,60);
+			}
+		}
 	}
 }
 function stateAction(p){
-	if(state==1){
-		
+	if(state==1){ //그리기
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:40,width:60,height:60});
 	}  
 	else if(state==2){ //총
-		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:50,width:60,height:60});
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:40,width:60,height:60});
 	}
 	else if(state==3){//집
 		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:80,height:80});
@@ -314,20 +471,30 @@ function stateAction(p){
 	else if(state==4){//허리케인
 		ele.push({state:state,x:p.x,y:p.y});
 	}
-	else if(state==5){
+	else if(state==5){ //목성
 		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:100,height:100});
 	}	
 	else if(state==6){//전사
 		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:10,width:30,height:30});
 	}
 	else if(state==7){ //공룡
-		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:10,width:100,height:100});
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:10,width:65,height:65});
 	}
-	else if(state==8){
-	
+	else if(state==8){ //칼
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:40,width:60,height:60});
 	}
-	else if(state==9){
-	
+	else if(state==9){ //망치
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:40,width:60,height:60});
+	}
+	else if(state==16){ //에그
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:500,width:30,height:30});
+	}
+	else if(state==17){ //대포
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:80,height:80});
+	}
+	else if(state==18){ //동화
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:80,height:80});
+		
 	}
 }
 function setDragListeners(ctx,img,draw){
@@ -356,14 +523,17 @@ function choose(){
   		imgData.data[i+3]=100;
   	}
 	ctx.putImageData(imgData,0,0);
-	ctx.drawImage(home,cvs.width/7*3,0,cvs.width/10,cvs.width/10);
-	ctx.drawImage(ar1,cvs.width/7*1,cvs.height/7*1,cvs.width/10,cvs.width/10);
-	ctx.drawImage(gun1,cvs.width/7*1,cvs.height/7*3,cvs.width/10,cvs.width/10);
-	ctx.drawImage(house1,cvs.width/7*1,cvs.height/7*5,cvs.width/10,cvs.width/10);
-	ctx.drawImage(nature1,cvs.width/7*3,cvs.height/7*1,cvs.width/10,cvs.width/10);
-	ctx.drawImage(spc2,cvs.width/7*3,cvs.height/7*3,cvs.width/10,cvs.width/10);
-	ctx.drawImage(sum1,cvs.width/7*3,cvs.height/7*5,cvs.width/10,cvs.width/10);
-	ctx.drawImage(sum2,cvs.width/7*5,cvs.height/7*1,cvs.width/10,cvs.width/10);
-	ctx.drawImage(wpon1,cvs.width/7*5,cvs.height/7*3,cvs.width/10,cvs.width/10);
-	ctx.drawImage(wpon2,cvs.width/7*5,cvs.height/7*5,cvs.width/10,cvs.width/10);
+	ctx.drawImage(home,cvs.width/7*3,0,cvs.width/9,cvs.height/10);
+	ctx.drawImage(ar1,cvs.width/9*1,cvs.height/9*1,cvs.width/10,cvs.height/10);
+	ctx.drawImage(gun1,cvs.width/9*1,cvs.height/9*3,cvs.width/10,cvs.height/10);
+	ctx.drawImage(house1,cvs.width/9*1,cvs.height/9*5,cvs.width/10,cvs.height/10);
+	ctx.drawImage(nature1,cvs.width/9*3,cvs.height/9*1,cvs.width/10,cvs.height/10);
+	ctx.drawImage(spc2,cvs.width/9*3,cvs.height/9*3,cvs.width/10,cvs.height/10);
+	ctx.drawImage(sum1,cvs.width/9*3,cvs.height/9*5,cvs.width/10,cvs.height/10);
+	ctx.drawImage(sum2,cvs.width/9*5,cvs.height/9*1,cvs.width/10,cvs.height/10);
+	ctx.drawImage(wpon1,cvs.width/9*5,cvs.height/9*3,cvs.width/10,cvs.height/10);
+	ctx.drawImage(ham,cvs.width/9*5,cvs.height/9*5,cvs.width/10,cvs.height/10);
+	ctx.drawImage(egg,cvs.width/9*7,cvs.height/9*1,cvs.width/10,cvs.height/10);
+	ctx.drawImage(cannon,cvs.width/9*7,cvs.height/9*3,cvs.width/10,cvs.height/10);
+	ctx.drawImage(castle,cvs.width/9*7,cvs.height/9*5,cvs.width/10,cvs.height/10);
 }
