@@ -16,7 +16,7 @@ var bgw,bgh;
 	8-wpon1=언월도
 	9-wpon2=칼
 */
-var con,ar1,gun1,house1,nature1,spc1,spc2,sum1,sum2,wpon1,wpon2,play,home,s2b,death,bgl,exp,bomb,blt,ham,crk,lb,castle,egg,cannon,uni;
+var con,ar1,gun1,house1,nature1,spc1,spc2,sum1,sum2,wpon1,wpon2,play,home,s2b,death,bgl,exp,bomb,blt,ham,crk,lb,castle,egg,cannon,uni,chick,dragon,ice,bb1,bb2,rb1,rb2,wiz,wat;
 var state=1;
 var isPaused = false;
 var raf=null;
@@ -85,6 +85,24 @@ function imginit(){
 	cannon.src="../img/cannon/cannon.svg";
 	uni=new Image();
 	uni.src="../img/art/unicon.svg";
+	chick=new Image();
+	chick.src="../img/egg/chick.svg";
+	dragon=new Image();
+	dragon.src="../img/egg/dragon.svg";
+	ice=new Image();
+	ice.src="../img/egg/iceberg.svg";
+	bb1=new Image();
+	bb1.src="../img/cannon/bomb1.svg";
+	bb2=new Image();
+	bb2.src="../img/cannon/bomb2.svg";
+	rb1=new Image();
+	rb1.src="../img/fairytale/rabbit1.svg";
+	rb2=new Image();
+	rb2.src="../img/fairytale/rabbit2.svg";
+	wat=new Image();
+	wat.src="../img/fairytale/water.svg";
+	wiz=new Image();
+	wiz.src="../img/fairytale/wizard.svg";
 }
 
 function start(){
@@ -126,7 +144,7 @@ function start(){
 		document.body.removeChild(main);
 		document.body.appendChild(cvs);
 		ctx.beginPath();
-		ctx.lineWidth=3;
+		ctx.lineWidth=2;
 		cvsClick();
 		raf=requestAnimationFrame(draw);
 	},false);
@@ -258,7 +276,7 @@ function eleAction(){
 				ctx.drawImage(spc1,ele[i].x,ele[i].y,100,100);
 			}
 		}
-		else if(ele[i].state==6){
+		else if(ele[i].state==6){ //전사
 			if(!ele[i].live){
 				ele[i].cnt--;
 				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
@@ -423,14 +441,50 @@ function eleAction(){
 				}
 			ctx.drawImage(lb,ele[i].x,ele[i].y,80,80);
 		}
-		else if(ele[i].state==16){
-			
+		else if(ele[i].state==16){ //에그
+			ele[i].cnt--;
+			if(!ele[i].live ){
+				ele.splice(i,1);
+				continue;
+			}
+			else if(ele[i].cnt<=0){
+				var r=Math.floor(Math.random()*2);
+				if(r==1) ele.push({state:20,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:30,height:30});
+				else ele.push({state:21,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:100,height:100});
+				ele.splice(i,1);
+				continue;
+			}
+			else{
+				ctx.drawImage(egg,ele[i].x,ele[i].y,30,30);
+			}
 		}
-		else if(ele[i].state==17){
-			
+		else if(ele[i].state==17){ //대포
+			if(!ele[i].live || ele[i].cnt<=0){
+				ele.splice(i,1);
+				continue;
+			}
+			ctx.drawImage(cannon,ele[i].x,ele[i].y,80,80);
+			ele[i].cnt--;
+			if(ele[i].cnt%100==0){
+				ele.push({state:26,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:110,height:110,endBomb:Math.floor(Math.random()*(cvs.height-ele[i].y)),iy:ele[i].y });
+			}
 		}
-		else if(ele[i].state==18){
-			
+		else if(ele[i].state==18){ //동화
+			if(!ele[i].live || ele[i].cnt<=0){
+				ele.splice(i,1);
+				continue;
+			}
+			ctx.drawImage(castle,ele[i].x,ele[i].y,80,80);
+			ele[i].cnt--;
+			if(ele[i].cnt%100==0){
+				var r2=Math.floor(Math.random()*2);
+				if(r2==1){
+					ele.push({state:28,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:40,height:40});
+				}
+				else{
+					ele.push({state:30,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:50,height:50});
+				}
+			}
 		}
 		else if(ele[i].state==19){
 			if(!ele[i].live){
@@ -454,6 +508,217 @@ function eleAction(){
 				ctx.lineTo(ele[i].x, ele[i].y);
 				ctx.stroke();
 				ctx.drawImage(uni,ele[i].x-30,ele[i].y-30,60,60);
+			}
+		}
+		else if(ele[i].state==20){ //병아리
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				var r=Math.floor(Math.random()*8);
+				ele[i].x+=d[r][0]*0.5;
+				ele[i].y+=d[r][1]*0.5;
+				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+					ele[i].x-=d[r][0]*0.5;
+					ele[i].y-=d[r][1]*0.5;
+				}
+				ctx.drawImage(chick,ele[i].x,ele[i].y,30,30);
+			}
+		}
+		else if(ele[i].state==21){ //드래곤
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				var r2=Math.floor(Math.random()*2000);
+				if(r2==1000){
+				ele.push({state:22,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:23,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:24,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				ele.push({state:25,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
+				}
+				var r=Math.floor(Math.random()*8);
+				ele[i].x+=d[r][0]*2;
+				ele[i].y+=d[r][1]*2;
+				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+					ele[i].x-=d[r][0]*2;
+					ele[i].y-=d[r][1]*2;
+				}
+				ctx.drawImage(dragon,ele[i].x,ele[i].y,100,100);
+			}
+		}
+		else if(ele[i].state==22){ //얼음
+			ele[i].x+=d[0][0]*2.5;
+			ele[i].y+=d[0][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(ice,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==23){
+			ele[i].x+=d[1][0]*2.5;
+			ele[i].y+=d[1][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(ice,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==24){
+			ele[i].x+=d[2][0]*2.5;
+			ele[i].y+=d[2][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(ice,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==25){
+			ele[i].x+=d[5][0]*2.5;
+			ele[i].y+=d[5][1]*2.5;
+			if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+				ele.splice(i,1);
+				continue;
+			}
+			for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+80 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+80)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			ctx.drawImage(ice,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==26){ //포탄
+			ele[i].x+=d[0][0]*2.5;
+			ele[i].y+=d[0][1]*2.5;
+			if(ele[i].y>=ele[i].iy+ele[i].endBomb|| ele[i].y>=cvs.height-ele[i].height){
+				ele.push({state:27,x:ele[i].x,y:ele[i].y,live:true,cnt:100,width:ele[i].width,height:ele[i].height});
+				ele.splice(i,1);
+				continue;
+			}
+			ctx.drawImage(bb1,ele[i].x,ele[i].y,80,80);
+		}
+		else if(ele[i].state==27){ //포탄폭팔
+			ele[i].cnt--;
+			if(ele[i].cnt>=0){
+				ctx.drawImage(bb2,ele[i].x,ele[i].y,120,120);
+				for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+120 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+120)
+					ele[j].live=false;
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			}
+			else {
+				ele.splice(i,1);
+				continue;
+			}
+		}
+		else if(ele[i].state==28){ //토끼
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					var r2=Math.floor(Math.random()*5);
+					for(let i=0;i<r2;i++){
+						ele.push({state:29,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:40,height:40});
+					}
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				var r=Math.floor(Math.random()*8);
+				ele[i].x+=d[r][0]*1;
+				ele[i].y+=d[r][1]*1;
+				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
+					ele[i].x-=d[r][0]*1;
+					ele[i].y-=d[r][1]*1;
+				}
+				ctx.drawImage(rb1,ele[i].x,ele[i].y,40,40);
+			}
+		}
+		else if(ele[i].state==29){ //토끼2
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				var rrr=Math.floor(Math.random()*200);
+				if(rrr==100){
+					var rx=Math.random()*cvs.width-ele[i].width;
+					var ry=Math.random()*cvs.width-ele[i].height;
+					ele[i].x=rx;
+					ele[i].y=ry;
+				}
+				ctx.drawImage(rb2,ele[i].x,ele[i].y,ele[i].width,ele[i].height);
+			}
+		}
+		else if(ele[i].state==30){ //마법사
+			if(!ele[i].live){
+				ele[i].cnt--;
+				ctx.drawImage(death,ele[i].x,ele[i].y,30,30);
+				if(ele[i].cnt<=0){
+					ele.splice(i,1);
+					continue;					
+				}
+			}
+			else{
+				var rrrr=Math.floor(Math.random()*1000);
+				var rrr=Math.floor(Math.random()*200);
+				if(rrrr==1)ele.push({state:31,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:110,height:110});
+				if(rrr==100){
+					var rx=Math.random()*cvs.width-ele[i].width;
+					var ry=Math.random()*cvs.width-ele[i].height;
+					ele[i].x=rx;
+					ele[i].y=ry;
+				}
+				ctx.drawImage(wiz,ele[i].x,ele[i].y,ele[i].width,ele[i].height);
+			}
+		}
+		else if(ele[i].state==31){ //파도
+			ele[i].x+=3;
+			if(ele[i].x<=cvs.width-ele[i].width){
+				ctx.drawImage(wat,ele[i].x,ele[i].y,120,120);
+				for(let j=0;j<ele.length;j++){ //소환수 일때
+					if(ele[j].live &&  ele[j].x < ele[i].x+110 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+110){
+						if(ele[j].x>=cvs.width-ele[j].width)ele[j].x-=1;
+						else ele[j].x+=1;
+					}
+				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
+				}
+			}
+			else {
+				ele.splice(i,1);
+				continue;
 			}
 		}
 	}
@@ -487,10 +752,10 @@ function stateAction(p){
 		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:40,width:60,height:60});
 	}
 	else if(state==16){ //에그
-		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:500,width:30,height:30});
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:300,width:30,height:30});
 	}
 	else if(state==17){ //대포
-		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:80,height:80});
+		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:100,height:100});
 	}
 	else if(state==18){ //동화
 		ele.push({state:state,x:p.x,y:p.y,live:true,cnt:1000,width:80,height:80});
