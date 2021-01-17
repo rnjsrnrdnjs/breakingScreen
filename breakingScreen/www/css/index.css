@@ -2,9 +2,9 @@ html,body{margin:0;padding:0;width:100%;  height:100%;}
 #main{
 	width:100%;
 	height:100%;
-	background-image:url(../img/main3.jpg);
-	background-repeat:no-repeat;
 	background-size:100% 100%;
+	background-image:url(../img/main.svg);
+	background-repeat:no-repeat;
 	text-align:center;
 }
 @media screen and(min-width:800px){
@@ -30,13 +30,13 @@ html,body{margin:0;padding:0;width:100%;  height:100%;}
 	border-radius: .25em; 
 	font-size: 2em; 
 	overflow:hidden;
-	
+	opacity: 0.5;
 	width:55%;
 	height:40%;
 } 
 #main #btn{
 	display: inline-block; 
-	padding: .5em .75em; 
+	padding: .5em .75em;
 	color: #999; 
 	font-size: 1em; 
 	line-height: normal; 
@@ -45,16 +45,15 @@ html,body{margin:0;padding:0;width:100%;  height:100%;}
 	cursor: pointer; 
 	border: 2px solid black; 
 	border-radius: .25em; 
-	
 	width:20%;
 	height:12%;
 }
 #main input[type="file"] { /* 파일 필드 숨기기 */ 
 	position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; 
 }
-#a,#b,#c,#d,#e,#f,#g{
-	width:15%;
-	height:15%;
+#a,#b,#c,#d,#e,#f,#g,#a2,#b2,#c2,#d2,#e2,#f2,#g2 {
+	width:11%;
+	height:11%;
 }
 #control {
 	width:100%;

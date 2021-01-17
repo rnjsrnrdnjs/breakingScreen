@@ -123,6 +123,7 @@ function start(){
 	sel.addEventListener('change',(e)=>{
 		var lbf=document.getElementById('lbf');
 		lbf.style.backgroundSize=100 + "% " + 100 + "%";
+		lbf.style.opacity="1";
 		let reader=new FileReader();
 		var lbimg=new Image();
 		reader.onload=function(){
@@ -150,6 +151,8 @@ function start(){
 	},false);
 }
 function end(){
+	while(ele.length)ele.pop();
+	ctx.clearRect(0,0,cvs.width,cvs.height);
 	document.body.removeChild(cvs);
 	document.body.appendChild(main);
 	start();
@@ -675,7 +678,7 @@ function eleAction(){
 				var rrr=Math.floor(Math.random()*200);
 				if(rrr==100){
 					var rx=Math.random()*cvs.width-ele[i].width;
-					var ry=Math.random()*cvs.width-ele[i].height;
+					var ry=Math.random()*cvs.height-ele[i].height;
 					ele[i].x=rx;
 					ele[i].y=ry;
 				}
@@ -697,7 +700,7 @@ function eleAction(){
 				if(rrrr==1)ele.push({state:31,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:110,height:110});
 				if(rrr==100){
 					var rx=Math.random()*cvs.width-ele[i].width;
-					var ry=Math.random()*cvs.width-ele[i].height;
+					var ry=Math.random()*cvs.height-ele[i].height;
 					ele[i].x=rx;
 					ele[i].y=ry;
 				}
@@ -710,8 +713,8 @@ function eleAction(){
 				ctx.drawImage(wat,ele[i].x,ele[i].y,120,120);
 				for(let j=0;j<ele.length;j++){ //소환수 일때
 					if(ele[j].live &&  ele[j].x < ele[i].x+110 && ele[j].x+ele[j].width>ele[i].x &&ele[j].y>ele[i].y && ele[j].y+ele[j].height <ele[i].y+110){
-						if(ele[j].x>=cvs.width-ele[j].width)ele[j].x-=1;
-						else ele[j].x+=1;
+						if(ele[j].x>=cvs.width-ele[j].width)ele[j].x-=2;
+						else ele[j].x+=2;
 					}
 				//if (RectA.Left < RectB.Right && RectA.Right > RectB.Left && RectA.Top > RectB.Bottom && RectA.Bottom < RectB.Top )
 				}
