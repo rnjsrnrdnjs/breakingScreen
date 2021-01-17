@@ -551,11 +551,11 @@ function eleAction(){
 				ele.push({state:25,x:ele[i].x,y:ele[i].y,live:true,cnt:10,width:80,height:80});
 				}
 				var r=Math.floor(Math.random()*8);
-				ele[i].x+=d[r][0]*2;
-				ele[i].y+=d[r][1]*2;
+				ele[i].x+=d[r][0]*4;
+				ele[i].y+=d[r][1]*4;
 				if(ele[i].x>cvs.width || ele[i].x<0 || ele[i].y>cvs.height || ele[i].y<0){
-					ele[i].x-=d[r][0]*2;
-					ele[i].y-=d[r][1]*2;
+					ele[i].x-=d[r][0]*4;
+					ele[i].y-=d[r][1]*4;
 				}
 				ctx.drawImage(dragon,ele[i].x,ele[i].y,100,100);
 			}
